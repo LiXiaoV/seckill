@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaov.seckill.mapper.OrderMapper">
+    <insert id="insert" parameterType="OrderInfo">
+        <selectKey keyProperty="id" keyColumn="id" resultType="long" order="AFTER">
+            select last_insert_id();
+        </selectKey>
+        insert into order_info(user_id,goods_id,delivery_addr_id,goods_name,goods_count,goods_price,order_channel,status,create_date,pay_date)
+         values(#{userId},#{goodsId},#{deliveryAddrId},#{goodsName},#{goodsCount},#{goodsPrice},#{orderChannel},#{status},#{createDate},#{payDate})
+    </insert>
+
+    <resultMap id="OrderInfo" type="orderInfo">
+        <id property="id" column="id"></id>
+        <result property="userId" column="user_id"></result>
+        <result property="goodsId" column="goods_id"></result>
+        <result property="deliveryAddrId" column="delivery_addr_id"></result>
+        <result property="goodsName" column="goods_name"></result>
+        <result property="goodsCount" column="goods_count"></result>
+        <result property="goodsPrice" column="goods_price"></result>
+        <result property="orderChannel" column="order_channel"></result>
+        <result property="status" column="status"></result>
+        <result property="createDate" column="create_date"></result>
+        <result property="payDate" column="pay_date"></result>
+    </resultMap>
+
+    <insert id="insertMiaoshaOrder" parameterType="MiaoshaOrder">
+        <selectKey keyProperty="id" keyColumn="id" resultType="long" order="AFTER">
+            select last_insert_id();
+        </selectKey>
+        insert into miaosha_order(user_id,order_id,goods_id)
+         values(#{userId},#{orderId},#{goodsId})
+    </insert>
+
+    <select id="getMiaoshaOrderByUserIdGoodsId" resultType="MiaoshaOrder">
+        select * from miaosha_order where user_id=#{userId} and goods_id=#{goodsId}
+    </select>
+
+    <select id="getOrderById" resultMap="OrderInfo">
+        select * from order_info where id = #{orderId} limit 1
+    </select>
+</mapper>
