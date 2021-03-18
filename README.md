@@ -1,0 +1,4 @@
+# seckill
+java秒杀系统
+
+使用Springboot框架进行开发，Mybatis做持久层，用MySQL做持久化，用redis实现缓存，通过在redis和数 据库共同验证确保不会出现超卖现象，通过rabbitmq做流量削峰和异步，主要通过缓存和异步保证系统的高并发。通过 jmeter压测工具测得优化过的秒杀接口qps提升约2倍。
